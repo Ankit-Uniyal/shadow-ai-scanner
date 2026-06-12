@@ -1,0 +1,12 @@
+# Scan output: never commit real endpoint reports, they contain
+# hostnames, usernames, and the device's software inventory.
+reports/
+reports_*/
+
+# Python
+__pycache__/
+*.pyc
+
+# OS noise
+.DS_Store
+Thumbs.db
