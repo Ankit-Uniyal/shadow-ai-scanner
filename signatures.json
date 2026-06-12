@@ -1,0 +1,164 @@
+{
+  "schema_version": "1.1",
+  "updated": "2026-06-13",
+  "notes": "Signature-based detection set for endpoint-local Shadow AI discovery. Extend this file as new tools appear. 'hosting' is cloud|local|hybrid. 'risk' is the base risk before contextual adjustment. Names in 'allowlist' are sanctioned tools: they stay in the inventory but are downgraded to info and excluded from posture and exit codes.",
+  "allowlist": [],
+
+  "processes": [
+    {"name": "ChatGPT Desktop", "patterns": ["chatgpt"], "vendor": "OpenAI", "category": "assistant", "hosting": "cloud", "risk": "high"},
+    {"name": "Claude Desktop", "patterns": ["claude.exe", "claude helper", "claude.app", "anthropic claude"], "vendor": "Anthropic", "category": "assistant", "hosting": "cloud", "risk": "high"},
+    {"name": "Microsoft Copilot", "patterns": ["copilot.exe", "microsoft.copilot", "ms-copilot"], "vendor": "Microsoft", "category": "assistant", "hosting": "cloud", "risk": "high"},
+    {"name": "Perplexity Desktop", "patterns": ["perplexity"], "vendor": "Perplexity", "category": "assistant", "hosting": "cloud", "risk": "high"},
+    {"name": "Cursor", "patterns": ["cursor.exe", "cursor helper", "cursor.app"], "vendor": "Anysphere", "category": "code_assistant", "hosting": "cloud", "risk": "high"},
+    {"name": "Windsurf / Codeium", "patterns": ["windsurf", "codeium"], "vendor": "Codeium", "category": "code_assistant", "hosting": "cloud", "risk": "high"},
+    {"name": "GitHub Copilot Agent", "patterns": ["copilot-agent", "github-copilot", "copilot-language-server"], "vendor": "GitHub", "category": "code_assistant", "hosting": "cloud", "risk": "high"},
+    {"name": "Tabnine", "patterns": ["tabnine"], "vendor": "Tabnine", "category": "code_assistant", "hosting": "hybrid", "risk": "medium"},
+    {"name": "Continue", "patterns": ["continue.exe", "continue-binary"], "vendor": "Continue", "category": "code_assistant", "hosting": "hybrid", "risk": "medium"},
+    {"name": "Ollama", "patterns": ["ollama"], "vendor": "Ollama", "category": "local_model_runtime", "hosting": "local", "risk": "medium"},
+    {"name": "LM Studio", "patterns": ["lm studio", "lmstudio", "lm-studio"], "vendor": "LM Studio", "category": "local_model_runtime", "hosting": "local", "risk": "medium"},
+    {"name": "GPT4All", "patterns": ["gpt4all"], "vendor": "Nomic", "category": "local_model_runtime", "hosting": "local", "risk": "medium"},
+    {"name": "Jan", "patterns": ["jan.exe", "jan.app", "jan-ai"], "vendor": "Jan", "category": "local_model_runtime", "hosting": "local", "risk": "medium"},
+    {"name": "llama.cpp server", "patterns": ["llama-server", "llama.cpp", "llamafile"], "vendor": "ggml", "category": "local_model_runtime", "hosting": "local", "risk": "medium"},
+    {"name": "Text Generation WebUI", "patterns": ["text-generation-webui", "oobabooga"], "vendor": "oobabooga", "category": "local_model_runtime", "hosting": "local", "risk": "medium"},
+    {"name": "ComfyUI", "patterns": ["comfyui"], "vendor": "ComfyUI", "category": "image_model_runtime", "hosting": "local", "risk": "medium"},
+    {"name": "Stable Diffusion WebUI", "patterns": ["stable-diffusion-webui", "automatic1111"], "vendor": "AUTOMATIC1111", "category": "image_model_runtime", "hosting": "local", "risk": "medium"},
+    {"name": "Warp Terminal (AI)", "patterns": ["warp.exe", "warp helper", "dev.warp"], "vendor": "Warp", "category": "ai_enabled_app", "hosting": "cloud", "risk": "medium"},
+    {"name": "Raycast (AI)", "patterns": ["raycast"], "vendor": "Raycast", "category": "ai_enabled_app", "hosting": "cloud", "risk": "medium"},
+    {"name": "Grammarly", "patterns": ["grammarly"], "vendor": "Grammarly", "category": "ai_enabled_app", "hosting": "cloud", "risk": "medium"},
+    {"name": "Otter.ai", "patterns": ["otter.ai", "otterai"], "vendor": "Otter", "category": "meeting_ai", "hosting": "cloud", "risk": "high"},
+    {"name": "Fireflies", "patterns": ["fireflies"], "vendor": "Fireflies", "category": "meeting_ai", "hosting": "cloud", "risk": "high"},
+    {"name": "Read AI", "patterns": ["read.ai", "readai"], "vendor": "Read AI", "category": "meeting_ai", "hosting": "cloud", "risk": "high"}
+  ],
+
+  "cli": [
+    {"name": "Ollama CLI", "binaries": ["ollama"], "vendor": "Ollama", "category": "local_model_runtime", "hosting": "local", "risk": "medium"},
+    {"name": "Claude Code", "binaries": ["claude"], "vendor": "Anthropic", "category": "code_assistant", "hosting": "cloud", "risk": "high"},
+    {"name": "GitHub Copilot CLI", "binaries": ["gh-copilot", "copilot"], "vendor": "GitHub", "category": "code_assistant", "hosting": "cloud", "risk": "high"},
+    {"name": "Aider", "binaries": ["aider"], "vendor": "Aider", "category": "code_assistant", "hosting": "cloud", "risk": "high"},
+    {"name": "Open Interpreter", "binaries": ["interpreter"], "vendor": "Open Interpreter", "category": "agent", "hosting": "cloud", "risk": "critical"},
+    {"name": "Shell GPT", "binaries": ["sgpt"], "vendor": "shell-gpt", "category": "assistant", "hosting": "cloud", "risk": "high"},
+    {"name": "llm (Datasette)", "binaries": ["llm"], "vendor": "Datasette", "category": "assistant", "hosting": "hybrid", "risk": "medium"},
+    {"name": "aichat", "binaries": ["aichat"], "vendor": "aichat", "category": "assistant", "hosting": "hybrid", "risk": "medium"},
+    {"name": "mods", "binaries": ["mods"], "vendor": "Charm", "category": "assistant", "hosting": "cloud", "risk": "high"},
+    {"name": "Cursor Agent CLI", "binaries": ["cursor-agent"], "vendor": "Anysphere", "category": "agent", "hosting": "cloud", "risk": "critical"},
+    {"name": "Goose Agent", "binaries": ["goose"], "vendor": "Block", "category": "agent", "hosting": "cloud", "risk": "critical"}
+  ],
+
+  "pip": [
+    {"name": "openai", "vendor": "OpenAI", "category": "sdk", "hosting": "cloud", "risk": "high"},
+    {"name": "anthropic", "vendor": "Anthropic", "category": "sdk", "hosting": "cloud", "risk": "high"},
+    {"name": "google-generativeai", "vendor": "Google", "category": "sdk", "hosting": "cloud", "risk": "high"},
+    {"name": "google-genai", "vendor": "Google", "category": "sdk", "hosting": "cloud", "risk": "high"},
+    {"name": "cohere", "vendor": "Cohere", "category": "sdk", "hosting": "cloud", "risk": "high"},
+    {"name": "mistralai", "vendor": "Mistral", "category": "sdk", "hosting": "cloud", "risk": "high"},
+    {"name": "groq", "vendor": "Groq", "category": "sdk", "hosting": "cloud", "risk": "high"},
+    {"name": "replicate", "vendor": "Replicate", "category": "sdk", "hosting": "cloud", "risk": "high"},
+    {"name": "litellm", "vendor": "BerriAI", "category": "sdk_gateway", "hosting": "hybrid", "risk": "high"},
+    {"name": "langchain", "vendor": "LangChain", "category": "framework", "hosting": "hybrid", "risk": "high"},
+    {"name": "langchain-core", "vendor": "LangChain", "category": "framework", "hosting": "hybrid", "risk": "high"},
+    {"name": "llama-index", "vendor": "LlamaIndex", "category": "framework", "hosting": "hybrid", "risk": "high"},
+    {"name": "llama_index", "vendor": "LlamaIndex", "category": "framework", "hosting": "hybrid", "risk": "high"},
+    {"name": "autogen-agentchat", "vendor": "Microsoft", "category": "agent_framework", "hosting": "hybrid", "risk": "critical"},
+    {"name": "pyautogen", "vendor": "Microsoft", "category": "agent_framework", "hosting": "hybrid", "risk": "critical"},
+    {"name": "crewai", "vendor": "CrewAI", "category": "agent_framework", "hosting": "hybrid", "risk": "critical"},
+    {"name": "langgraph", "vendor": "LangChain", "category": "agent_framework", "hosting": "hybrid", "risk": "critical"},
+    {"name": "semantic-kernel", "vendor": "Microsoft", "category": "agent_framework", "hosting": "hybrid", "risk": "high"},
+    {"name": "dspy-ai", "vendor": "Stanford", "category": "framework", "hosting": "hybrid", "risk": "medium"},
+    {"name": "instructor", "vendor": "instructor", "category": "framework", "hosting": "cloud", "risk": "medium"},
+    {"name": "guidance", "vendor": "guidance-ai", "category": "framework", "hosting": "hybrid", "risk": "medium"},
+    {"name": "transformers", "vendor": "Hugging Face", "category": "model_library", "hosting": "local", "risk": "medium"},
+    {"name": "sentence-transformers", "vendor": "Hugging Face", "category": "model_library", "hosting": "local", "risk": "medium"},
+    {"name": "huggingface-hub", "vendor": "Hugging Face", "category": "model_library", "hosting": "hybrid", "risk": "medium"},
+    {"name": "ollama", "vendor": "Ollama", "category": "sdk", "hosting": "local", "risk": "medium"},
+    {"name": "chromadb", "vendor": "Chroma", "category": "vector_store", "hosting": "local", "risk": "medium"},
+    {"name": "faiss-cpu", "vendor": "Meta", "category": "vector_store", "hosting": "local", "risk": "low"},
+    {"name": "pinecone-client", "vendor": "Pinecone", "category": "vector_store", "hosting": "cloud", "risk": "medium"},
+    {"name": "weaviate-client", "vendor": "Weaviate", "category": "vector_store", "hosting": "hybrid", "risk": "medium"},
+    {"name": "qdrant-client", "vendor": "Qdrant", "category": "vector_store", "hosting": "hybrid", "risk": "medium"}
+  ],
+
+  "npm": [
+    {"name": "@anthropic-ai/claude-code", "vendor": "Anthropic", "category": "code_assistant", "hosting": "cloud", "risk": "high"},
+    {"name": "@anthropic-ai/sdk", "vendor": "Anthropic", "category": "sdk", "hosting": "cloud", "risk": "high"},
+    {"name": "openai", "vendor": "OpenAI", "category": "sdk", "hosting": "cloud", "risk": "high"},
+    {"name": "@google/generative-ai", "vendor": "Google", "category": "sdk", "hosting": "cloud", "risk": "high"},
+    {"name": "langchain", "vendor": "LangChain", "category": "framework", "hosting": "hybrid", "risk": "high"},
+    {"name": "@langchain/core", "vendor": "LangChain", "category": "framework", "hosting": "hybrid", "risk": "high"},
+    {"name": "llamaindex", "vendor": "LlamaIndex", "category": "framework", "hosting": "hybrid", "risk": "high"},
+    {"name": "ai", "vendor": "Vercel", "category": "framework", "hosting": "hybrid", "risk": "medium"},
+    {"name": "ollama", "vendor": "Ollama", "category": "sdk", "hosting": "local", "risk": "medium"},
+    {"name": "@mistralai/mistralai", "vendor": "Mistral", "category": "sdk", "hosting": "cloud", "risk": "high"}
+  ],
+
+  "browser_extensions": {
+    "known_ids": {
+      "jgjamcfbicmfildkkjbdojdamemamoad": "ChatGPT for Google",
+      "ofpnmcalabcbjgholdjcjblkibolbppb": "Monica AI",
+      "dhoenijjpgpeimemopealfcbieckceod": "Sider ChatGPT",
+      "fdmnemjcfgnopaolnlobeokmgncbhhpg": "Compose AI",
+      "iiofmimaakgakkojhngdbkjmnmfilbmm": "Merlin AI"
+    },
+    "name_keywords": ["chatgpt", "gpt-", " gpt ", "openai", "claude", "anthropic", "gemini", "copilot", "perplexity", "monica", "sider", "merlin", "harpa", "compose ai", "jasper", "writesonic", "grammarly", "ai assistant", "ai writer", "ai chat", "llm "],
+    "vendor": "various", "category": "browser_extension", "hosting": "cloud", "risk": "high"
+  },
+
+  "domains": [
+    {"domain": "api.openai.com", "vendor": "OpenAI", "risk": "high"},
+    {"domain": "api.anthropic.com", "vendor": "Anthropic", "risk": "high"},
+    {"domain": "generativelanguage.googleapis.com", "vendor": "Google Gemini", "risk": "high"},
+    {"domain": "aiplatform.googleapis.com", "vendor": "Google Vertex AI", "risk": "high"},
+    {"domain": "api.cohere.com", "vendor": "Cohere", "risk": "high"},
+    {"domain": "api.cohere.ai", "vendor": "Cohere", "risk": "high"},
+    {"domain": "api.mistral.ai", "vendor": "Mistral", "risk": "high"},
+    {"domain": "api.groq.com", "vendor": "Groq", "risk": "high"},
+    {"domain": "api.perplexity.ai", "vendor": "Perplexity", "risk": "high"},
+    {"domain": "api.together.xyz", "vendor": "Together AI", "risk": "high"},
+    {"domain": "api.replicate.com", "vendor": "Replicate", "risk": "high"},
+    {"domain": "api.deepseek.com", "vendor": "DeepSeek", "risk": "high"},
+    {"domain": "openrouter.ai", "vendor": "OpenRouter", "risk": "high"},
+    {"domain": "api.x.ai", "vendor": "xAI Grok", "risk": "high"},
+    {"domain": "api-inference.huggingface.co", "vendor": "Hugging Face", "risk": "medium"},
+    {"domain": "api.elevenlabs.io", "vendor": "ElevenLabs", "risk": "medium"}
+  ],
+
+  "ports": [
+    {"port": 11434, "name": "Ollama API", "vendor": "Ollama", "hosting": "local", "risk": "medium"},
+    {"port": 1234, "name": "LM Studio API", "vendor": "LM Studio", "hosting": "local", "risk": "medium"},
+    {"port": 8188, "name": "ComfyUI", "vendor": "ComfyUI", "hosting": "local", "risk": "low"},
+    {"port": 7860, "name": "Gradio (SD WebUI / TGW)", "vendor": "Gradio", "hosting": "local", "risk": "low"}
+  ],
+
+  "env_keys": [
+    {"key": "OPENAI_API_KEY", "vendor": "OpenAI", "risk": "high"},
+    {"key": "ANTHROPIC_API_KEY", "vendor": "Anthropic", "risk": "high"},
+    {"key": "GOOGLE_API_KEY", "vendor": "Google", "risk": "high"},
+    {"key": "GEMINI_API_KEY", "vendor": "Google", "risk": "high"},
+    {"key": "COHERE_API_KEY", "vendor": "Cohere", "risk": "high"},
+    {"key": "MISTRAL_API_KEY", "vendor": "Mistral", "risk": "high"},
+    {"key": "GROQ_API_KEY", "vendor": "Groq", "risk": "high"},
+    {"key": "PERPLEXITY_API_KEY", "vendor": "Perplexity", "risk": "high"},
+    {"key": "TOGETHER_API_KEY", "vendor": "Together AI", "risk": "high"},
+    {"key": "REPLICATE_API_TOKEN", "vendor": "Replicate", "risk": "high"},
+    {"key": "DEEPSEEK_API_KEY", "vendor": "DeepSeek", "risk": "high"},
+    {"key": "OPENROUTER_API_KEY", "vendor": "OpenRouter", "risk": "high"},
+    {"key": "XAI_API_KEY", "vendor": "xAI", "risk": "high"},
+    {"key": "HF_TOKEN", "vendor": "Hugging Face", "risk": "medium"},
+    {"key": "HUGGINGFACEHUB_API_TOKEN", "vendor": "Hugging Face", "risk": "medium"}
+  ],
+
+  "config_paths": [
+    {"path": ".ollama", "vendor": "Ollama", "name": "Ollama config/models", "risk": "medium"},
+    {"path": ".config/io.datasette.llm", "vendor": "Datasette", "name": "llm config", "risk": "medium"},
+    {"path": ".aider.conf.yml", "vendor": "Aider", "name": "Aider config", "risk": "high"},
+    {"path": ".continue", "vendor": "Continue", "name": "Continue config", "risk": "medium"},
+    {"path": ".cursor", "vendor": "Anysphere", "name": "Cursor config", "risk": "high"},
+    {"path": ".codeium", "vendor": "Codeium", "name": "Codeium config", "risk": "high"},
+    {"path": ".config/github-copilot", "vendor": "GitHub", "name": "Copilot config", "risk": "high"},
+    {"path": ".config/Claude", "vendor": "Anthropic", "name": "Claude Desktop config", "risk": "high"},
+    {"path": "AppData/Roaming/Claude", "vendor": "Anthropic", "name": "Claude Desktop config (Windows)", "risk": "high"},
+    {"path": "Library/Application Support/Claude", "vendor": "Anthropic", "name": "Claude Desktop config (macOS)", "risk": "high"},
+    {"path": "AppData/Local/github-copilot", "vendor": "GitHub", "name": "Copilot config (Windows)", "risk": "high"},
+    {"path": ".codex", "vendor": "OpenAI", "name": "Codex CLI config", "risk": "high"},
+    {"path": ".config/sgpt", "vendor": "shell-gpt", "name": "Shell GPT config", "risk": "high"}
+  ]
+}
