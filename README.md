@@ -1,122 +1,150 @@
 # Shadow AI Endpoint Scanner
 
-Endpoint-local discovery of AI tools, assistants, agents, SDKs, browser
-extensions, local model runtimes, AI credentials, and active AI network sessions.
-Built for Shadow AI / unsanctioned-AI inventory in regulated environments.
+**Step-by-step setup and run guide for Windows.**
+For any new PC and any new user. No technical background needed.
 
-It answers one question for a single device: **what AI is present and in use on
-this endpoint, and how exposed are we because of it.**
+Scanner version 1.1.0 | Guide date: June 2026
 
-> **New to the command line?** See the plain-language
-> [Windows setup guide](docs/SETUP-GUIDE-WINDOWS.md). A
-> [sample HTML report](sample-report/shadowai-sample-report.html) is included.
+---
 
-## What this is, and what it is not
+## 1. What this tool is
 
-This is an **agent that runs on the device being assessed**. It inspects the
-local machine and produces a structured inventory plus a risk-scored report. It
-is **not** a remote scanner that reaches across the network to machines you do
-not control. Fleet coverage comes from deploying this agent to each endpoint.
+This tool checks **one computer** for AI software: AI apps (like ChatGPT or Claude desktop), AI browser extensions, AI developer tools, locally running AI models, and saved AI account keys. After the check, it creates a report file you open in your web browser.
 
-Run only on devices you are authorized to scan.
+You will use it in three stages: put two files in a folder, install Python once, then type three short commands. The whole first run takes about 10 minutes. Every run after that takes under a minute.
 
-## Requirements
+## 2. Safety facts, in plain words
 
-- **Python 3.8 or newer**
-- **psutil** (the only dependency; the scanner still runs without it, but the
-  process, port, and network collectors are disabled)
+- The tool **only looks**. It does not change, delete, install, or uninstall anything on the computer.
+- It **never reads passwords or secret key values**. If an AI key exists, the report only says that one exists.
+- The report **stays on the computer**. Nothing is uploaded or sent anywhere.
+- Only run it on computers you **own or are clearly authorized to scan** (for example your own laptop, or company devices you are responsible for).
 
-### Step 1 - Install Python (skip if you already have it)
+## 3. What you need before starting
 
-Check whether Python is already installed:
+- The two scanner files: `shadowai.py` and `signatures.json` (ask the person who gave you this guide, or download them from the same place you got this document).
+- An internet connection, needed once to install Python.
+- About 10 minutes.
 
-```bash
-python --version      # Windows
-python3 --version     # macOS / Linux
+---
+
+## 4. One-time setup (do this once per computer)
+
+### Step 1 - Create the folder and add the two files
+
+1. Open **File Explorer** (the yellow folder icon).
+2. Open the **C: drive** (This PC, then Local Disk C:).
+3. Right-click an empty area, choose **New > Folder**. Name it exactly: `shadowai`
+4. Copy or move the two files into that folder, so they sit at:
+   - `C:\shadowai\shadowai.py`
+   - `C:\shadowai\signatures.json`
+
+> **Important - file names must be exact.** Windows sometimes hides file endings, so a wrongly named file can look correct. In File Explorer, click the **View** menu and turn on **"File name extensions"**. Then confirm the files are named exactly `shadowai.py` and `signatures.json`. If you see `shadowai.py.py`, `shadowai.py.txt`, or `signatures.json.txt`, right-click the file, choose **Rename**, and fix it.
+
+### Step 2 - Install Python (one time only)
+
+1. Open your web browser and go to **https://www.python.org/downloads/**
+2. Click the big yellow **Download Python** button and run the downloaded installer.
+3. On the **very first installer screen**, tick the small checkbox at the bottom that says **"Add python.exe to PATH"**, then click **Install Now**.
+4. Wait for **"Setup was successful"** and close the installer.
+
+> **Important.** That checkbox is the single most important click in this whole guide. If you miss it, the commands below will fail with "python is not recognized". If that happens, simply run the installer again and tick the box.
+
+---
+
+## 5. Running a scan
+
+### Step 3 - Open the command window
+
+1. Press the **Windows key** on your keyboard.
+2. Type `cmd` and press **Enter**. A black window opens. This is where you type commands.
+
+### Step 4 - Type these three commands
+
+Type each line into the black window and press **Enter** after each one. Wait for each to finish before typing the next.
+
+**Command 1 of 3** - moves you into the scanner folder:
+
+```bat
+cd C:\shadowai
 ```
 
-If you see a version number (3.8 or newer), you are set. If not, download the
-installer from https://www.python.org/downloads/ . **On Windows, tick "Add
-Python to PATH" on the first screen of the installer.**
+**Command 2 of 3** - installs the one helper Python needs (first time only). Lines of text will scroll, ending with "Successfully installed":
 
-> On Windows the command is usually `python`; on macOS and Linux it is
-> `python3`. Use whichever one prints a version on your machine.
-
-### Step 2 - Get the scanner
-
-Download or clone this repository so that `shadowai.py` and `signatures.json`
-sit together in the same folder.
-
-### Step 3 - Install the dependency
-
-```bash
-pip install -r requirements.txt        # Windows
-pip3 install -r requirements.txt       # macOS / Linux
+```bat
+pip install psutil
 ```
 
-## Running a scan
+**Command 3 of 3** - runs the scan. You will see a few "scanning..." lines, then a summary box. It takes a few seconds:
 
-```bash
-python shadowai.py                      # Windows
-python3 shadowai.py                     # macOS / Linux
+```bat
+python shadowai.py
 ```
 
-This runs a full scan and writes a timestamped JSON and HTML report into a
-`reports/` folder next to the script.
+### Step 5 - Open the report
 
-### Common options
+1. Open File Explorer and go to `C:\shadowai\reports`
+2. Double-click the file ending in **.html**. The report opens in your browser.
+3. The file ending in **.json** contains the same data for Excel or GRC tools. You can ignore it for normal reading.
 
-```bash
-python shadowai.py --no-network              # skip DNS / connection checks
-python shadowai.py --output-dir C:\\logs      # choose where reports are written
-python shadowai.py --json-only               # write JSON only, no HTML
-python shadowai.py --signatures custom.json  # use a custom signature set
-python shadowai.py --quiet                   # no console output (scheduled runs)
+---
+
+## 6. How to read the report
+
+The colored banner at the top is the **overall posture** of the computer. Findings are grouped below it by severity, most serious first. Each finding card shows what was found, the evidence, why it received its severity, and a short governance note explaining the risk in plain terms.
+
+| Severity | What it means | What to do |
+|----------|---------------|------------|
+| **Critical** | An AI tool confirmed in active use, with a configured account key, or able to take actions on its own. | Review first. Decide if it is approved. If not, remove it or raise it with IT or risk. |
+| **High** | A significant AI tool, extension, or saved key is present. | Confirm whether it is approved for this computer. |
+| **Medium** | An AI component is present but lower urgency, often a local tool. | Record it in your inventory. No rush. |
+| **Low** | A minor supporting component. | Awareness only. |
+| **Info** | A tool on the approved list, or background information. | No action. It does not count toward the banner. |
+
+> Findings on a personal laptop are normal. If you use AI tools yourself, the report will list them, and the banner may show high or critical. That means the inventory is working, not that the computer is infected.
+
+## 7. Running it again later
+
+Python and the helper stay installed. For every future scan, only **two** commands are needed:
+
+```bat
+cd C:\shadowai
+python shadowai.py
 ```
 
-> `signatures.json` must sit next to `shadowai.py`, or be passed with
-> `--signatures`. Without it the scanner stops with a configuration error
-> (exit code 2).
+Each scan creates a new, time-stamped report in the `reports` folder, so older reports are kept automatically.
 
-## Reading the report
+## 8. Optional - mark a tool as approved
 
-Each run produces two files in the output folder:
+If a tool is officially approved (for example the built-in Microsoft Copilot on Windows), you can stop it from raising the alarm while keeping it in the inventory:
 
-- **HTML** - open it in any browser. Start at the **posture banner** at the top
-  (for example *critical exposure*), then read the findings grouped by severity.
-  Each card shows the tool, vendor, evidence, a governance note, and why its
-  severity was escalated.
-- **JSON** - the same data in machine-readable form for a GRC platform, SIEM, or
-  spreadsheet.
+1. Right-click `signatures.json`, choose **Open with > Notepad**.
+2. Near the top, find the line: `"allowlist": []`
+3. Type the tool name between the brackets, exactly as it appears in the report, for example: `"allowlist": ["Microsoft Copilot"]`
+4. Save the file (**Ctrl+S**) and run the scan again. The tool now shows as **Info** with the note "sanctioned".
 
-### Exit codes (for MDM / CI gating)
+## 9. If something goes wrong
 
-| Code | Meaning |
-|------|---------|
-| 0 | Clean, or low / medium findings only |
-| 1 | At least one high finding |
-| 3 | At least one critical finding |
-| 2 | Configuration error (signatures.json not found) |
+| What you see | Why it happens | How to fix it |
+|--------------|----------------|---------------|
+| `'python' is not recognized` | The PATH checkbox was missed during the Python install. | Run the Python installer again and tick "Add python.exe to PATH". Or try: `py shadowai.py` |
+| The **Microsoft Store** opens when you type `python` | Windows has a shortcut that intercepts the word python. | Use: `py shadowai.py` . If that also fails, install Python from python.org as in Step 2. |
+| `can't open file 'shadowai.py'` | The file is not in the folder you are in, or its name is wrong. | Type `dir` and press Enter. Check the file is listed and named exactly `shadowai.py`. If you are in the wrong folder, type `cd C:\shadowai` |
+| `signatures.json not found` | The two files are not in the same folder. | Put `shadowai.py` and `signatures.json` together in `C:\shadowai`. |
+| `'pip' is not recognized` | Same PATH problem as above. | Use: `py -m pip install psutil` |
+| File is named `shadowai.py.py` or ends in `.txt` | The browser or a rename added an extra ending. | In the black window type: `ren shadowai.py.py shadowai.py` (adjust to match the wrong name you see). |
 
-## Customizing detections and allowlisting
+## 10. Common questions
 
-The detection knowledge base lives in `signatures.json`. To mark a sanctioned
-tool, add its exact finding name to the `allowlist` array. It then stays in the
-inventory at `info` severity and stops driving the posture banner and exit
-codes:
+**Does it send my data anywhere?** No. Everything stays on the computer. The only internet activity during a scan is looking up the addresses of known AI services so the tool can check whether the computer is currently connected to any of them. To skip even that, run: `python shadowai.py --no-network`
 
-```json
-"allowlist": ["Microsoft Copilot", "Grammarly"]
-```
+**Will it slow down or change my computer?** No. It reads for a few seconds and writes two small report files.
 
-## Deployment to a fleet
+**How do I remove it?** Delete the `C:\shadowai` folder. Python can stay for other uses, or be uninstalled from Windows Settings > Apps.
 
-This agent must run in each user context to see that user's browser extensions,
-environment credentials, and per-user config. Common options: push `shadowai.py`
-and `signatures.json` via MDM / RMM (Intune, Jamf, Kandji, Tanium, NinjaOne) on a
-schedule; run it through EDR live-response or an osquery extension; or use a
-per-user scheduled task that writes JSON to a collected path. Aggregate the
-per-host JSON centrally for a fleet-wide inventory and trend over time.
+**Who should see the report?** Treat it as internal. It lists software present on a specific computer, which is useful to an attacker, so share it only with the people who need it.
+
+---
 
 ## License
 
