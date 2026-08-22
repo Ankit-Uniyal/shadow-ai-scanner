@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1",
-  "updated": "2026-06-13",
+  "updated": "2026-08-22",
   "notes": "Signature-based detection set for endpoint-local Shadow AI discovery. Extend this file as new tools appear. 'hosting' is cloud|local|hybrid. 'risk' is the base risk before contextual adjustment. Names in 'allowlist' are sanctioned tools: they stay in the inventory but are downgraded to info and excluded from posture and exit codes.",
   "allowlist": [],
 
@@ -27,7 +27,10 @@
     {"name": "Grammarly", "patterns": ["grammarly"], "vendor": "Grammarly", "category": "ai_enabled_app", "hosting": "cloud", "risk": "medium"},
     {"name": "Otter.ai", "patterns": ["otter.ai", "otterai"], "vendor": "Otter", "category": "meeting_ai", "hosting": "cloud", "risk": "high"},
     {"name": "Fireflies", "patterns": ["fireflies"], "vendor": "Fireflies", "category": "meeting_ai", "hosting": "cloud", "risk": "high"},
-    {"name": "Read AI", "patterns": ["read.ai", "readai"], "vendor": "Read AI", "category": "meeting_ai", "hosting": "cloud", "risk": "high"}
+    {"name": "Read AI", "patterns": ["read.ai", "readai"], "vendor": "Read AI", "category": "meeting_ai", "hosting": "cloud", "risk": "high"},
+    {"name": "ChatGPT Atlas Browser", "patterns": ["chatgpt atlas", "openai atlas", "com.openai.atlas"], "vendor": "OpenAI", "category": "agentic_browser", "hosting": "cloud", "risk": "critical"},
+    {"name": "Perplexity Comet Browser", "patterns": ["comet browser", "perplexity comet", "ai.perplexity.comet"], "vendor": "Perplexity", "category": "agentic_browser", "hosting": "cloud", "risk": "critical"},
+    {"name": "Dia Browser", "patterns": ["dia browser", "company.thebrowser.dia"], "vendor": "The Browser Company", "category": "agentic_browser", "hosting": "cloud", "risk": "high"}
   ],
 
   "cli": [
@@ -41,7 +44,10 @@
     {"name": "aichat", "binaries": ["aichat"], "vendor": "aichat", "category": "assistant", "hosting": "hybrid", "risk": "medium"},
     {"name": "mods", "binaries": ["mods"], "vendor": "Charm", "category": "assistant", "hosting": "cloud", "risk": "high"},
     {"name": "Cursor Agent CLI", "binaries": ["cursor-agent"], "vendor": "Anysphere", "category": "agent", "hosting": "cloud", "risk": "critical"},
-    {"name": "Goose Agent", "binaries": ["goose"], "vendor": "Block", "category": "agent", "hosting": "cloud", "risk": "critical"}
+    {"name": "Goose Agent", "binaries": ["goose"], "vendor": "Block", "category": "agent", "hosting": "cloud", "risk": "critical"},
+    {"name": "OpenAI Codex CLI", "binaries": ["codex"], "vendor": "OpenAI", "category": "agent", "hosting": "cloud", "risk": "critical"},
+    {"name": "Gemini CLI", "binaries": ["gemini"], "vendor": "Google", "category": "agent", "hosting": "cloud", "risk": "critical"},
+    {"name": "OpenCode", "binaries": ["opencode"], "vendor": "OpenCode", "category": "agent", "hosting": "cloud", "risk": "critical"}
   ],
 
   "pip": [
@@ -98,7 +104,7 @@
       "fdmnemjcfgnopaolnlobeokmgncbhhpg": "Compose AI",
       "iiofmimaakgakkojhngdbkjmnmfilbmm": "Merlin AI"
     },
-    "name_keywords": ["chatgpt", "gpt-", " gpt ", "openai", "claude", "anthropic", "gemini", "copilot", "perplexity", "monica", "sider", "merlin", "harpa", "compose ai", "jasper", "writesonic", "grammarly", "ai assistant", "ai writer", "ai chat", "llm "],
+    "name_keywords": ["chatgpt", "gpt-", " gpt ", "openai", "claude", "anthropic", "gemini", "copilot", "perplexity", "monica", "sider", "merlin", "harpa", "compose ai", "jasper", "writesonic", "grammarly", "ai assistant", "ai writer", "ai chat", "llm ", "deepseek", "kimi", "notion ai"],
     "vendor": "various", "category": "browser_extension", "hosting": "cloud", "risk": "high"
   },
 
@@ -159,6 +165,9 @@
     {"path": "Library/Application Support/Claude", "vendor": "Anthropic", "name": "Claude Desktop config (macOS)", "risk": "high"},
     {"path": "AppData/Local/github-copilot", "vendor": "GitHub", "name": "Copilot config (Windows)", "risk": "high"},
     {"path": ".codex", "vendor": "OpenAI", "name": "Codex CLI config", "risk": "high"},
-    {"path": ".config/sgpt", "vendor": "shell-gpt", "name": "Shell GPT config", "risk": "high"}
+    {"path": ".config/sgpt", "vendor": "shell-gpt", "name": "Shell GPT config", "risk": "high"},
+    {"path": ".claude", "vendor": "Anthropic", "name": "Claude Code config", "risk": "high"},
+    {"path": ".gemini", "vendor": "Google", "name": "Gemini CLI config", "risk": "high"},
+    {"path": ".config/opencode", "vendor": "OpenCode", "name": "OpenCode config", "risk": "high"}
   ]
 }
